@@ -1,0 +1,596 @@
+/* Reset untuk memastikan tidak ada margin/padding default */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+}
+
+.weather-app {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+}
+
+/* Sky Background - Perbaikan fullscreen */
+.sky-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  transition: background-color 1s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.sky-day-clear {
+  background: linear-gradient(to bottom, #4a8bfc, #74b3fe);
+}
+
+.sky-day-clouds {
+  background: linear-gradient(to bottom, #5d8bc9, #a1c2f2);
+}
+
+.sky-night-clear {
+  background: linear-gradient(to bottom, #0a1529, #1c3a67);
+}
+
+.sky-night-clouds {
+  background: linear-gradient(to bottom, #0e1623, #243c5a);
+}
+
+.sky-rain {
+  background: linear-gradient(to bottom, #2c3e50, #627994);
+}
+
+/* Hero Section */
+.hero-section {
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Search Container */
+.search-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.search-form {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.search-form button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background-color: #4a8bfc;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-form button:hover {
+  background-color: #3a6fd8;
+}
+
+/* Weather Display */
+.weather-display {
+  flex: 1;
+  padding: 0 1rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Weather Cards */
+.weather-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  overflow: hidden; /* Ensure content stays within card */
+}
+
+/* Current Weather */
+.current-weather {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-info {
+  flex: 1;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.location svg {
+  margin-right: 5px;
+  color: #4a8bfc;
+}
+
+.date-time {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.temperature {
+  font-size: 3.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.temperature span {
+  font-size: 2rem;
+}
+
+.weather-condition {
+  text-transform: capitalize;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: #444;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #555;
+}
+
+.detail svg {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: #4a8bfc;
+}
+
+.weather-icon {
+  font-size: 6rem;
+  color: #4a8bfc;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+/* Forecast Tabs */
+.forecast-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.tab {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 30px;
+  margin-right: 1rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  color: #444;
+  transition: all 0.3s;
+}
+
+.tab.active {
+  background-color: #4a8bfc;
+  color: white;
+  box-shadow: 0 2px 8px rgba(74, 139, 252, 0.4);
+}
+
+/* Hourly Forecast - Improved for better responsiveness */
+.hourly-forecast {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .hourly-forecast {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hourly-forecast {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+.hour-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.hour-item:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+.hour-time {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.hour-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #4a8bfc;
+}
+
+.hour-temp {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Daily Forecast */
+.daily-forecast {
+  display: flex;
+  flex-direction: column;
+}
+
+.day-item {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.day-item:last-child {
+  border-bottom: none;
+}
+
+.day-name {
+  width: 100px;
+  font-weight: 500;
+  color: #444;
+}
+
+.day-condition {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.day-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+  color: #4a8bfc;
+}
+
+.day-description {
+  text-transform: capitalize;
+  color: #555;
+}
+
+.day-temp {
+  width: 80px;
+  text-align: right;
+}
+
+.day-temp .max {
+  font-weight: 600;
+  color: #333;
+  margin-right: 0.5rem;
+}
+
+.day-temp .min {
+  color: #888;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(74, 139, 252, 0.3);
+  border-top-color: #4a8bfc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-container {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-container p {
+  margin-bottom: 1rem;
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+.error-container button {
+  background-color: #4a8bfc;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.error-container button:hover {
+  background-color: #3a6fd8;
+}
+
+/* Animation Elements */
+.sun {
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  width: 70px;
+  height: 70px;
+  background-color: #ffeb3b;
+  border-radius: 50%;
+  box-shadow: 0 0 50px #ffeb3b, 0 0 100px rgba(255, 235, 59, 0.8);
+  animation: float 10s infinite ease-in-out;
+}
+
+.moon {
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  width: 60px;
+  height: 60px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  animation: float 10s infinite ease-in-out;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.cloud {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50px;
+  animation: float-cloud 30s infinite linear;
+}
+
+.cloud-1 {
+  width: 100px;
+  height: 40px;
+  animation-duration: 50s;
+}
+
+.cloud-2 {
+  width: 160px;
+  height: 60px;
+  animation-duration: 40s;
+}
+
+.cloud-3 {
+  width: 120px;
+  height: 50px;
+  animation-duration: 60s;
+}
+
+@keyframes float-cloud {
+  from { transform: translateX(-150px); }
+  to { transform: translateX(calc(100vw + 150px)); }
+}
+
+.raindrop {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+  animation: rain 1s infinite linear;
+}
+
+@keyframes rain {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(100vh); }
+}
+
+.snowflake {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: snow 8s infinite linear;
+}
+
+@keyframes snow {
+  from { 
+    transform: translateY(-20px) rotate(0deg); 
+  }
+  to { 
+    transform: translateY(100vh) rotate(360deg); 
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Additional Media Queries for better overall responsiveness */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+  
+  .current-weather {
+    flex-direction: column;
+  }
+  
+  .weather-icon {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .day-item {
+    flex-wrap: wrap;
+  }
+  
+  .day-name {
+    width: 50%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .day-condition {
+    width: 50%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .day-temp {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-card {
+    padding: 1rem;
+  }
+  
+  .hero-section {
+    padding: 1.5rem 1rem;
+  }
+  
+  .temperature {
+    font-size: 3rem;
+  }
+  
+  .forecast-tabs {
+    justify-content: center;
+  }
+  
+  .tab {
+    padding: 0.5rem 1rem;
+  }
+  
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .day-name, .day-condition, .day-temp {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .day-condition {
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .day-icon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Pastikan tidak ada overflow pada body dan html */
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
