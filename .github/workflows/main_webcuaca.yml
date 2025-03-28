@@ -1,58 +1,33 @@
-name: Build and deploy Node.js app to Azure Web App - webcuaca
+name: Deploy to Azure Web App
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-env:
-  CI: true
-
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment: Production
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        
-    - name: Debug files
-      run: |
-        echo "Current directory: $(pwd)"
-        ls -la
-        echo "Node version: $(node -v)"
-        echo "NPM version: $(npm -v)"
 
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '20.x'
-        cache: 'npm'
 
     - name: Install dependencies
-      run: npm ci --no-audit
+      run: npm install
 
     - name: Build project
       run: npm run build --if-present
 
-    - name: Verify build output
-      run: |
-        ls -la build/ || echo "No build directory"
-        ls -la public/ || echo "No public directory"
-
-    - name: Login to Azure
-      uses: azure/login@v2
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
     - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v3
+      uses: azure/webapps-deploy@v2
       with:
         app-name: 'webcuaca'
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         package: .
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
