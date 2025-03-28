@@ -34,8 +34,8 @@ jobs:
         run: npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./*
-
+        run: zip -rq release.zip .
+        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -59,8 +59,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip -d build
-
+        run: mkdir -p build && unzip release.zip -d build
       - name: Login to Azure
         uses: azure/login@v2
         with:
